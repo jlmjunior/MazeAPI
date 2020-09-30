@@ -16,20 +16,22 @@ namespace Labirinto.Util
         {
             maze = Maze.CriarLabirinto();
 
-            PosicaoModel campo = new PosicaoModel(startY, startX);
+            PosicaoModel node = new PosicaoModel(startY, startX);
 
+            // Cria uma nova pilha e empilha o nó inicial
             Stack pilha = new Stack();
-            pilha.Push(campo);
+            pilha.Push(node);
 
-            while (true)
+            // Loop até encontrar o nó desejado ou até verificar todos os nós
+            while (IsAvailable())
             {
-                campo = (PosicaoModel)pilha.Peek();
+                node = (PosicaoModel)pilha.Peek(); // Retorna a ponta da pilha
 
-                if (campo.posY == endY && campo.posX == endX) break;
+                if (node.posY == endY && node.posX == endX) break; // Caso tenha encontrado o nó de interesse
 
-                maze[campo.posY, campo.posX] = 1;
+                maze[node.posY, node.posX] = 1; // Marca nó como visitado
 
-                List<PosicaoModel> adjacentes = CamposAdjacentes(campo.posY, campo.posX);
+                List<PosicaoModel> adjacentes = CamposAdjacentes(node.posY, node.posX); 
 
                 bool hasNext = false;
 
@@ -37,21 +39,21 @@ namespace Labirinto.Util
                 {
                     if (VerificaCampo(p.posY, p.posX))
                     {
-                        pilha.Push(new PosicaoModel(p.posY, p.posX));
+                        pilha.Push(new PosicaoModel(p.posY, p.posX)); // Caso o campo seja válido, adiciona na pilha e força a saída do loop atual
                         hasNext = true;
 
                         break;
                     }
                 }
 
-                if (!hasNext) pilha.Pop();
+                if (!hasNext) pilha.Pop(); // Remove da pilha caso esteja em um beco sem saída
             }
 
             return pilha;
         }
 
         #region MÉTODOS AUXILIARES
-        private bool VerificaCampo(int y, int x)
+        private bool VerificaCampo(int y, int x) 
         {
             try
             {
@@ -72,6 +74,16 @@ namespace Labirinto.Util
             , new PosicaoModel(y-1, x), new PosicaoModel(y+1, x)};
 
             return adjacentes;
+        }
+
+        private bool IsAvailable()
+        {
+            foreach(int i in maze)
+            {
+                if (i == 0) return true;
+            }
+
+            return false;
         }
         #endregion
     }
