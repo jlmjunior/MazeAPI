@@ -24,27 +24,27 @@ namespace Labirinto.Util
             eY = endY;
             eX = endX;
 
-            List<NodeModel> fechada = new List<NodeModel>();
-            List<NodeModel> aberta = new List<NodeModel>();
+            List<NodeModel> fechada = new List<NodeModel>(); // Lista para nodes promissores
+            List<NodeModel> aberta = new List<NodeModel>(); // Lista para nodes já verificados
 
             aberta.Add(new NodeModel(new PosicaoModel(startY, startX), 0, BuscaH(new PosicaoModel(startY, startX))));
 
-            while (aberta.Count != 0)
+            while (aberta.Count != 0) // Loop enquanto a lista aberta não estiver vazia
             {
                 NodeModel nodeAtual = BuscaMenor(aberta);
 
                 aberta.Remove(nodeAtual);
                 fechada.Add(nodeAtual);
 
-                if (nodeAtual.posicao.posY == eY && nodeAtual.posicao.posX == eX) return fechada;
+                if (nodeAtual.posicao.posY == eY && nodeAtual.posicao.posX == eX) return fechada; // Retorna o resultado caso o node atual seja o desejado
 
                 List<PosicaoModel> camposAdjacentes = CamposAdjacentes(nodeAtual.posicao.posY, nodeAtual.posicao.posX);
 
                 foreach(PosicaoModel p in camposAdjacentes)
                 {
-                    if (VerificaCampo(p.posY, p.posX))
+                    if (VerificaCampo(p.posY, p.posX)) 
                     {
-                        if (!HasNode(p, fechada))
+                        if (!HasNode(p, fechada)) // Adiciona na lista aberta caso o node seja promissor
                         {
                             NodeModel novoNode = new NodeModel(p, nodeAtual.g + 1, BuscaH(p));
                             novoNode.pai = nodeAtual.posicao;
@@ -53,7 +53,7 @@ namespace Labirinto.Util
                         }
                         else
                         {
-                            foreach(NodeModel node in fechada)
+                            foreach(NodeModel node in fechada) // Verificação para casos em que se encotrou um F menor que o antigo
                             {
                                 if (node.posicao.posY == p.posY && node.posicao.posX == p.posX && node.g > nodeAtual.g + 1)
                                 {
