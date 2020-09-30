@@ -95,7 +95,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\BuscaHeuristica.cs" />
     <Compile Include="Util\BuscaCega.cs" />
-    <Compile Include="Util\BuscaTeste.cs" />
     <Compile Include="Util\Maze.cs" />
   </ItemGroup>
   <ItemGroup>
