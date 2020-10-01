@@ -35,6 +35,7 @@ namespace Labirinto.Util
 
                 bool hasNext = false;
 
+                // Percorre os campos adjacentes, caso seja um campo válido adiciona na pilha
                 foreach (PosicaoModel p in adjacentes)
                 {
                     if (VerificaCampo(p.posY, p.posX))
@@ -53,6 +54,7 @@ namespace Labirinto.Util
         }
 
         #region MÉTODOS AUXILIARES
+        // Verifica se o campo não é uma parede ou está fora dos limites da matriz
         private bool VerificaCampo(int y, int x) 
         {
             try
@@ -76,6 +78,7 @@ namespace Labirinto.Util
             return adjacentes;
         }
 
+        // Verifica se a matriz ainda possui campos que não foram explorados
         private bool IsAvailable()
         {
             foreach(int i in maze)

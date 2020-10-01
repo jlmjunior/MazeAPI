@@ -38,8 +38,10 @@ namespace Labirinto.Util
 
                 if (nodeAtual.posicao.posY == eY && nodeAtual.posicao.posX == eX) return fechada; // Retorna o resultado caso o node atual seja o desejado
 
+                // Campos ajacentes ao nó atual
                 List<PosicaoModel> camposAdjacentes = CamposAdjacentes(nodeAtual.posicao.posY, nodeAtual.posicao.posX);
 
+                // Percorre os campos adjacentes e verifica se é um campo válido para incluir na lista aberta
                 foreach(PosicaoModel p in camposAdjacentes)
                 {
                     if (VerificaCampo(p.posY, p.posX)) 
@@ -89,6 +91,7 @@ namespace Labirinto.Util
             return y + x;
         }
 
+        // Verifica se o campo não é uma parede ou está fora dos limites da matriz
         private bool VerificaCampo(int y, int x)
         {
             try
@@ -112,6 +115,7 @@ namespace Labirinto.Util
             return adjacentes;
         }
 
+        // Verifica se determinado nó existe na lista
         private bool HasNode(PosicaoModel p, List<NodeModel> nodeList)
         {
             var node = nodeList.Find(e => e.posicao.posX == p.posX && e.posicao.posY == p.posY);
