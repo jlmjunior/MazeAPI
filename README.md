@@ -1,4 +1,4 @@
-## Projeto IA
+## Projeto IA Labirinto
 
 Algoritmos utilizados:
 
