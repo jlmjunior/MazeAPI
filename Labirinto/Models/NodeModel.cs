@@ -7,20 +7,20 @@ namespace Labirinto.Models
 {
     public class NodeModel
     {
-        public PosicaoModel posicao { get; set; }
-        public PosicaoModel pai { get; set; }
-        public int g { get; set; }
-        public int h { get; set; }
-        public int f 
+        public PosicaoModel Posicao { get; set; }
+        public PosicaoModel Pai { get; set; }
+        public int G { get; set; }
+        public int H { get; set; }
+        public int F 
         { 
-            get { return h + g; } 
+            get { return H + G; } 
         }
 
         public NodeModel(PosicaoModel posicao, int g, int h)
         {
-            this.posicao = posicao;
-            this.g = g;
-            this.h = h;
+            this.Posicao = posicao;
+            this.G = g;
+            this.H = h;
         }
     }
 }

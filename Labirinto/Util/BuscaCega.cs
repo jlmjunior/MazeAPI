@@ -18,43 +18,39 @@ namespace Labirinto.Util
 
             PosicaoModel node = new PosicaoModel(startY, startX);
 
-            // Cria uma nova pilha e empilha o nó inicial
             Stack pilha = new Stack();
             pilha.Push(node);
 
-            // Loop até encontrar o nó desejado ou até verificar todos os nós
             while (IsAvailable())
             {
-                node = (PosicaoModel)pilha.Peek(); // Retorna a ponta da pilha
+                node = (PosicaoModel)pilha.Peek(); 
 
-                if (node.posY == endY && node.posX == endX) break; // Caso tenha encontrado o nó de interesse
+                if (node.PosY == endY && node.PosX == endX) break; 
 
-                maze[node.posY, node.posX] = 1; // Marca nó como visitado
+                maze[node.PosY, node.PosX] = 1; 
 
-                List<PosicaoModel> adjacentes = CamposAdjacentes(node.posY, node.posX); 
+                List<PosicaoModel> adjacentes = CamposAdjacentes(node.PosY, node.PosX); 
 
                 bool hasNext = false;
 
-                // Percorre os campos adjacentes, caso seja um campo válido adiciona na pilha
                 foreach (PosicaoModel p in adjacentes)
                 {
-                    if (VerificaCampo(p.posY, p.posX))
+                    if (VerificaCampo(p.PosY, p.PosX))
                     {
-                        pilha.Push(new PosicaoModel(p.posY, p.posX)); // Caso o campo seja válido, adiciona na pilha e força a saída do loop atual
+                        pilha.Push(new PosicaoModel(p.PosY, p.PosX));
                         hasNext = true;
 
                         break;
                     }
                 }
 
-                if (!hasNext) pilha.Pop(); // Remove da pilha caso esteja em um beco sem saída
+                if (!hasNext) pilha.Pop();
             }
 
             return pilha;
         }
 
         #region MÉTODOS AUXILIARES
-        // Verifica se o campo não é uma parede ou está fora dos limites da matriz
         private bool VerificaCampo(int y, int x) 
         {
             try
@@ -78,7 +74,6 @@ namespace Labirinto.Util
             return adjacentes;
         }
 
-        // Verifica se a matriz ainda possui campos que não foram explorados
         private bool IsAvailable()
         {
             foreach(int i in maze)

@@ -7,13 +7,13 @@ namespace Labirinto.Models
 {
     public class BlocoModel
     {
-        public int tipo { get; set; }
-        public int distancia { get; set; }
+        public int Tipo { get; set; }
+        public int Distancia { get; set; }
 
         public BlocoModel(int tipo, int distancia)
         {
-            this.tipo = tipo;
-            this.distancia = distancia;
+            this.Tipo = tipo;
+            this.Distancia = distancia;
         }
     }
 }

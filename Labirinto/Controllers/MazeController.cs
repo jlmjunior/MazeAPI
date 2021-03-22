@@ -15,7 +15,6 @@ namespace Labirinto.Controllers
         {
             int[,] maze = Maze.CriarLabirinto();
 
-            // Valida se as posições escolhidas não são paredes
             if (maze[startY, startX] == 1 || maze[endY, endX] == 1)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Message: Error", "application/json");
@@ -29,7 +28,6 @@ namespace Labirinto.Controllers
 
             int size = pilha.Count;
 
-            // Desempilha e transfere para lista do tipo Posicao que vai ser retornada no JSON
             for (int i = 0; i < size; i++) 
             {
                 lista.Add((PosicaoModel)pilha.Peek());
@@ -44,7 +42,6 @@ namespace Labirinto.Controllers
         {
             int[,] maze = Maze.CriarLabirinto();
 
-            // Valida se as posições escolhidas não são paredes
             if (maze[startY, startX] == 1 || maze[endY, endX] == 1)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Message: Error", "application/json");
@@ -62,13 +59,12 @@ namespace Labirinto.Controllers
 
             NodeModel nodeAtual = nodeList[nodeList.Count - 1];
             
-            // Retrocede o caminho através das posições dos nós pais, até encontrar o nó inicial (sem pai)
-            while(nodeAtual.pai != null)
+            while(nodeAtual.Pai != null)
             {
-                lista.Add(nodeAtual.posicao);
+                lista.Add(nodeAtual.Posicao);
 
-                PosicaoModel p = nodeAtual.pai;
-                nodeAtual = nodeList.Find(e => e.posicao.posX == p.posX && e.posicao.posY == p.posY);
+                PosicaoModel p = nodeAtual.Pai;
+                nodeAtual = nodeList.Find(e => e.Posicao.PosX == p.PosX && e.Posicao.PosY == p.PosY);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, lista, "application/json");

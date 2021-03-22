@@ -36,20 +36,20 @@ namespace Labirinto.Util
                 aberta.Remove(nodeAtual);
                 fechada.Add(nodeAtual);
 
-                if (nodeAtual.posicao.posY == eY && nodeAtual.posicao.posX == eX) return fechada; // Retorna o resultado caso o node atual seja o desejado
+                if (nodeAtual.Posicao.PosY == eY && nodeAtual.Posicao.PosX == eX) return fechada; // Retorna o resultado caso o node atual seja o desejado
 
                 // Campos ajacentes ao nó atual
-                List<PosicaoModel> camposAdjacentes = CamposAdjacentes(nodeAtual.posicao.posY, nodeAtual.posicao.posX);
+                List<PosicaoModel> camposAdjacentes = CamposAdjacentes(nodeAtual.Posicao.PosY, nodeAtual.Posicao.PosX);
 
                 // Percorre os campos adjacentes e verifica se é um campo válido para incluir na lista aberta
                 foreach(PosicaoModel p in camposAdjacentes)
                 {
-                    if (VerificaCampo(p.posY, p.posX)) 
+                    if (VerificaCampo(p.PosY, p.PosX)) 
                     {
                         if (!HasNode(p, fechada)) // Adiciona na lista aberta caso o node seja promissor
                         {
-                            NodeModel novoNode = new NodeModel(p, nodeAtual.g + 1, BuscaH(p));
-                            novoNode.pai = nodeAtual.posicao;
+                            NodeModel novoNode = new NodeModel(p, nodeAtual.G + 1, BuscaH(p));
+                            novoNode.Pai = nodeAtual.Posicao;
 
                             aberta.Add(novoNode);
                         }
@@ -57,10 +57,10 @@ namespace Labirinto.Util
                         {
                             foreach(NodeModel node in fechada) // Verificação para casos em que se encotrou um F menor que o antigo
                             {
-                                if (node.posicao.posY == p.posY && node.posicao.posX == p.posX && node.g > nodeAtual.g + 1)
+                                if (node.Posicao.PosY == p.PosY && node.Posicao.PosX == p.PosX && node.G > nodeAtual.G + 1)
                                 {
-                                    node.pai = nodeAtual.posicao;
-                                    node.g = nodeAtual.g + 1;
+                                    node.Pai = nodeAtual.Posicao;
+                                    node.G = nodeAtual.G + 1;
                                 }
                             }
                         }
@@ -75,17 +75,17 @@ namespace Labirinto.Util
         #region MÉTODOS AUXILIARES
         private NodeModel BuscaMenor(List<NodeModel> nodeList)
         {
-            List<NodeModel> lista = nodeList.OrderBy(e => e.f).ToList();
+            List<NodeModel> lista = nodeList.OrderBy(e => e.F).ToList();
 
             return lista[0];
         }
 
         private int BuscaH(PosicaoModel p)
         {
-            int y = eY - p.posY;
+            int y = eY - p.PosY;
             y = (y < 0 ? -(y) : y);
 
-            int x = eX - p.posX;
+            int x = eX - p.PosX;
             x = (x < 0 ? -(x) : x);
 
             return y + x;
@@ -118,9 +118,9 @@ namespace Labirinto.Util
         // Verifica se determinado nó existe na lista
         private bool HasNode(PosicaoModel p, List<NodeModel> nodeList)
         {
-            var node = nodeList.Find(e => e.posicao.posX == p.posX && e.posicao.posY == p.posY);
+            var node = nodeList.Find(e => e.Posicao.PosX == p.PosX && e.Posicao.PosY == p.PosY);
 
-            return (node == null ? false : true);
+            return (node != null);
         }
         #endregion
     }

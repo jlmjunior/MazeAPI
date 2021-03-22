@@ -7,13 +7,13 @@ namespace Labirinto.Models
 {
     public class PosicaoModel
     {
-        public int posY { get; set; }
-        public int posX { get; set; }
+        public int PosY { get; set; }
+        public int PosX { get; set; }
 
         public PosicaoModel(int posicaoY, int posicaoX)
         {
-            this.posY = posicaoY;
-            this.posX = posicaoX;
+            this.PosY = posicaoY;
+            this.PosX = posicaoX;
         }
     }
 }
